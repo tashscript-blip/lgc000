@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Legacy Grove Codex | 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+      /* --- GLOBAL SCROLLBAR --- */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+        background: #050509; /* Obsidian */
+      }
+      ::-webkit-scrollbar-track {
+        background: #050509; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #1C2430; 
+        border: 1px solid #0A0A10;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #F2C94C; /* Plasma Gold */
+      }
+      
+      /* --- TYPOGRAPHY UTILS --- */
+      .font-display { font-family: 'Cinzel', serif; }
+      .font-body { font-family: 'Inter', sans-serif; }
+      .font-mono { font-family: 'Space Mono', monospace; }
+      
+      /* --- ANIMATIONS --- */
+      @keyframes scanline {
+        0% { transform: translateY(-100%); }
+        100% { transform: translateY(100%); }
+      }
+      .animate-scanline {
+        animation: scanline 3s linear infinite;
+      }
+
+      /* --- COMPONENT LIBRARY --- */
+
+      /* 1. BUTTONS */
+      /* Primary Hex Button */
+      .btn-hex {
+        clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%, 0% 15%);
+        background: linear-gradient(180deg, #00E0FF 0%, #6C5CE7 100%);
+        border: 1px solid #F2C94C;
+        color: #EAF6FF;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        box-shadow: 0 0 15px rgba(0, 224, 255, 0.3);
+      }
+      .btn-hex:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0 25px rgba(0, 224, 255, 0.5);
+        filter: brightness(1.1);
+      }
+      .btn-hex:active {
+        transform: translateY(2px);
+      }
+      .btn-hex:disabled {
+        background: #243241;
+        border-color: #566376;
+        color: #6B7A8A;
+        box-shadow: none;
+        cursor: not-allowed;
+      }
+
+      /* Secondary Ghost Button */
+      .btn-ghost {
+        background: transparent;
+        border: 1px solid rgba(0, 224, 255, 0.4);
+        color: #EAF6FF;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        font-family: 'Inter', sans-serif;
+      }
+      .btn-ghost:hover {
+        background: rgba(10, 10, 16, 0.6);
+        border-color: #00E0FF;
+        box-shadow: 0 0 10px rgba(0, 224, 255, 0.2);
+      }
+
+      /* 2. INPUTS (Holographic Slot) */
+      .input-holo {
+        background: rgba(5, 5, 9, 0.6);
+        border: 1px solid #283143;
+        border-radius: 6px;
+        color: #EAF6FF;
+        font-family: 'Inter', sans-serif;
+        transition: all 0.2s ease;
+      }
+      .input-holo::placeholder {
+        color: #566376;
+      }
+      .input-holo:focus {
+        border-color: #00E0FF;
+        box-shadow: 0 0 8px rgba(0, 224, 255, 0.2) inset;
+        outline: none;
+      }
+
+      /* 3. CARDS (Glass Panel) */
+      .card-glass {
+        background: rgba(10, 10, 16, 0.6);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(0, 224, 255, 0.2);
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0, 224, 255, 0.05);
+        transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+      }
+      .card-glass:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 0 30px rgba(0, 224, 255, 0.15);
+        border-color: rgba(0, 224, 255, 0.4);
+      }
+
+      /* 4. UTILS */
+      .hologram-grid {
+        background-image: linear-gradient(rgba(0, 224, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 224, 255, 0.03) 1px, transparent 1px);
+        background-size: 40px 40px;
+      }
+      
+      .text-shadow-glow {
+        text-shadow: 0 0 10px rgba(0, 224, 255, 0.3);
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'obsidian': '#050509',
+              'citadel': '#0A0A10',
+              'mythic-blue': '#00E0FF',
+              'plasma-gold': '#F2C94C',
+              'arcane-violet': '#6C5CE7',
+              'plasma-white': '#EAF6FF',
+              'ash-grey': '#8E9BAA',
+              'critical-red': '#FF4B5C',
+              // Semantic mappings
+              'bg-primary': '#050509',
+              'text-primary': '#EAF6FF',
+              'text-secondary': '#8E9BAA',
+            },
+            fontFamily: {
+              display: ['Cinzel', 'serif'],
+              body: ['Inter', 'sans-serif'],
+              mono: ['Space Mono', 'monospace'],
+            },
+            animation: {
+              'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'spin-slow': 'spin 12s linear infinite',
+              'float': 'float 6s ease-in-out infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "react-router-dom": "https://esm.sh/react-router-dom@6.22.3"
+  }
+}
+</script>
+</head>
+  <body class="bg-obsidian text-text-primary overflow-x-hidden selection:bg-plasma-gold selection:text-obsidian font-body">
+    <div id="root"></div>
+  </body>
+</html>
